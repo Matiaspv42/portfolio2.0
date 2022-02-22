@@ -2,6 +2,11 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import waterVertexShader from './shaders/waterMirror/vertex.glsl'
+import waterFragmentShader from './shaders/waterMirror/fragment.glsl'
+import sphereVertexShader from './shaders/sphereShader/vertex.glsl'
+import sphereFragmentShader from './shaders/sphereShader/fragment.glsl'
+import { Reflector } from 'three/examples/jsm/objects/Reflector'
 
 /**
  * Debug
@@ -66,13 +71,39 @@ controls.enableDamping = true
  */
 
 // Dodecahedron
-const dodecahedron = new THREE.DodecahedronGeometry(5,5)
-const material1 = new THREE.MeshBasicMaterial(
-    {
-        wireframe:true,
-        color: 0x000000,
-    }
-)
+const dodecahedron = new THREE.DodecahedronGeometry(5,10)
+// const dodecahedron = new THREE.SphereGeometry( 5, 100, 100 )
+
+const vectors = [
+    new THREE.Vector3( 1, 0, 0 ),
+    new THREE.Vector3( 0, 1, 0 ),
+    new THREE.Vector3( 0, 0, 1 )
+];
+
+const position = dodecahedron.attributes.position;
+const centers = new Float32Array( position.count * 3 );
+
+for ( let i = 0, l = position.count; i < l; i ++ ) {
+    vectors[ i % 3 ].toArray( centers, i * 3 )
+}
+
+
+dodecahedron.setAttribute( 'center', new THREE.BufferAttribute( centers, 3 ) );
+
+const material1 = new THREE.ShaderMaterial({
+    vertexShader:sphereVertexShader,
+    fragmentShader:sphereFragmentShader,
+    uniforms: { 
+        'uThickness': {value: 1} ,
+        'uTime':{value:0.01},
+        'uStrengthNoise':{value:1.0}
+    },
+    side: THREE.DoubleSide,
+	alphaToCoverage: true // only works when WebGLRenderer's "antialias" is set to "true"
+})
+
+material1.extensions.derivatives = true;
+
 
 const polyhedron = new THREE.Mesh(dodecahedron, material1)
 polyhedron.position.y = 5
@@ -85,24 +116,39 @@ gui.add(polyhedron.position, 'x').min(-10).max(10).step(0.01).name('poly positio
 gui.add(polyhedron.position, 'y').min(-10).max(10).step(0.01).name('poly position y')
 gui.add(polyhedron.position, 'z').min(-10).max(10).step(0.01).name('poly position z')
 
+// Mirror
+// const planeGeometry = new THREE.PlaneGeometry(40,40,50,50)
+// const mirror = new Reflector(planeGeometry, {
+//     clipBias: 0.003,
+//     textureWidth: window.innerWidth * window.devicePixelRatio,
+//     textureHeight: window.innerHeight * window.devicePixelRatio,
+//     color: 0x777777
+// })
+
+// mirror.rotation.x = -Math.PI*0.5
+// mirror.position.y = -5
+// scene.add(mirror)
+
 // Plane
 const planeGeometry = new THREE.PlaneGeometry(40,40,50,50)
-const material2 = new THREE.MeshBasicMaterial(
-    {
-        wireframe: true,
-        color: 0x202b31,
-    }
-)
-const water = new THREE.Mesh(planeGeometry, material2)
-water.rotation.x = Math.PI*0.5
-water.position.y = -5
-scene.add(water)
+const material2 = new THREE.MeshStandardMaterial({
+    color: 0x000000,
+    wireframe:true
+})
+const plane = new THREE.Mesh(planeGeometry,material2)
+plane.rotation.x = Math.PI *0.5
+plane.position.y = -5
+scene.add(plane)
 
 // Debug
-gui.add(water.position, 'x').min(-10).max(10).step(0.01).name('water position x')
-gui.add(water.position, 'y').min(-10).max(10).step(0.01).name('water position y')
-gui.add(water.position, 'z').min(-10).max(10).step(0.01).name('water position z')
+// gui.add(mirror.position, 'x').min(-10).max(10).step(0.01).name('mirror position x')
+// gui.add(mirror.position, 'y').min(-10).max(10).step(0.01).name('mirror position y')
+// gui.add(mirror.position, 'z').min(-10).max(10).step(0.01).name('mirror position z')
 
+
+/**
+ * Light
+ */
 
 
 
@@ -128,6 +174,9 @@ const tick = () =>
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - lastElapsedTime
     lastElapsedTime = elapsedTime
+
+    // update uTime
+    material1.uniforms.uTime.value = elapsedTime
 
     // Update controls
     controls.update()
