@@ -20,9 +20,50 @@ html{
     top: 0;
     left: 0;
     outline: none;
-    z-index: -1;
+    z-index: 0;
 }
 header{
     height: 100vh;
     width: 100vw;
+}
+*{
+    margin: 0;
+    padding: 0;
+    /* border: 0; */
+    border: 1px solid red;
+}
+
+.section1{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.section1 h1,h4{
+    width: 30vw;
+    margin: 1rem;
+}
+.section1 header{
+    vertical-align: middle;
+}
+.projects{
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(8,1fr);
+    row-gap: 40px;
+    padding: 50px;
+    justify-items: center;
+}
+.projects img{
+    width: 100%;
+}
+.grid-col-span-5{
+    grid-column: span 5;
+}
+.grid-item-left{
+    grid-column-end: 6;
+}
+
+.grid-item-right{
+   grid-column-end: 9;
 }

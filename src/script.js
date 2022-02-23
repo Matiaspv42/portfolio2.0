@@ -63,8 +63,8 @@ gui.add(camera.position, 'z').min(-10).max(10).step(0.01).name('camera position 
 
 
 // Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+// const controls = new OrbitControls(camera, canvas)
+// controls.enableDamping = true
 
 /**
  * Geometries
@@ -179,7 +179,7 @@ const tick = () =>
     material1.uniforms.uTime.value = elapsedTime
 
     // Update controls
-    controls.update()
+    // controls.update()
 
     // Render
     renderer.render(scene, camera)
