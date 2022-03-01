@@ -54,20 +54,15 @@ module.exports = {
                 ]
             },
 
-            // Images
+           // Images
+           {
+            test: /\.(jpg|png|gif|svg)$/,
+            type: 'asset/resource',
+            generator:
             {
-                test: /\.(jpg|png|gif|svg)$/,
-                use:
-                [
-                    {
-                        loader: 'file-loader',
-                        options:
-                        {
-                            outputPath: 'assets/images/'
-                        }
-                    }
-                ]
-            },
+                filename: 'assets/images/[hash][ext]'
+            }
+        },
 
             // Fonts
             {

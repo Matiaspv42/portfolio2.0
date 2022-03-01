@@ -8,6 +8,9 @@ import sphereVertexShader from './shaders/sphereShader/vertex.glsl'
 import sphereFragmentShader from './shaders/sphereShader/fragment.glsl'
 import { Reflector } from 'three/examples/jsm/objects/Reflector'
 
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 /**
  * Debug
  */
@@ -53,6 +56,9 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 
 camera.position.x = 0
 camera.position.y = 5
 camera.position.z = 20
+
+// camera.fov = 2* Math.atan((sizes.height/2)/20)*(180/Math.PI)
+// console.log(camera.fov)
 scene.add(camera)
 
 // Debug
@@ -65,6 +71,7 @@ gui.add(camera.position, 'z').min(-10).max(10).step(0.01).name('camera position 
 // Controls
 // const controls = new OrbitControls(camera, canvas)
 // controls.enableDamping = true
+
 
 /**
  * Geometries
@@ -109,6 +116,18 @@ const polyhedron = new THREE.Mesh(dodecahedron, material1)
 polyhedron.position.y = 5
 
 scene.add(polyhedron)
+
+// Planes for images
+
+// const planePictures = new THREE.PlaneBufferGeometry(100,100,10,10)
+// const planeMaterial = new THREE.ShaderMaterial({
+//     uniforms:{
+//         uTime: {value:0},
+//     },
+//     wireframe:true,
+// })
+// const planePicture = new THREE.Mesh(planePictures,planeMaterial)
+// scene.add(planePicture)
 
 // Debug
 
@@ -163,6 +182,46 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// Postprocessing
+
+const composer = new EffectComposer(renderer)
+const renderPass = new RenderPass(scene,camera)
+composer.addPass(renderPass)
+
+var counter = 0.0;
+const myEffect = {
+    uniforms: {
+        "tDiffuse": { value: null },
+        "scrollSpeed": { value: null },
+    },
+    vertexShader: `
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix 
+        * modelViewMatrix 
+        * vec4( position, 1.0 );
+    }
+    `,
+    fragmentShader: `
+    uniform sampler2D tDiffuse;
+    varying vec2 vUv;
+    uniform float scrollSpeed;
+    void main(){
+        vec2 newUV = vUv;
+        float area = smoothstep(0.4,0.,vUv.y);
+        area = pow(area,4.);
+        newUV.x -= (vUv.x - 0.5)*0.1*area*scrollSpeed;
+        gl_FragColor = texture2D( tDiffuse, newUV);
+    //   gl_FragColor = vec4(area,0.,0.,1.);
+    }
+    `
+}
+
+const customPass = new ShaderPass(myEffect);
+customPass.renderToScreen = true;
+composer.addPass(customPass);
+
 /**
  * Animate
  */
@@ -182,7 +241,8 @@ const tick = () =>
     // controls.update()
 
     // Render
-    renderer.render(scene, camera)
+    // renderer.render(scene, camera)
+    composer.render()
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
