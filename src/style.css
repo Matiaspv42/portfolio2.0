@@ -26,7 +26,12 @@ html{
     outline: none;
     z-index: -2;
 }
-
+.webgl2
+{
+    position: absolute;
+    outline: none;
+    z-index: -2;
+}
 header{
     height: 100vh;
     width: 100vw;
@@ -61,8 +66,12 @@ header{
 }
 .projects img{
     width: 100%;
-    
+    /* transform: scale(1);
+    transition: 0.3s ease-in-out; */
 }
+/* .projects img:hover{
+    transform: scale(1.5);
+} */
 .grid-col-span-5{
     grid-column: span 5;
 }
@@ -72,4 +81,9 @@ header{
 
 .grid-item-right{
    grid-column-end: 9;
+}
+
+.section3{
+    height: 100vh;
+    width: 100vw;
 }

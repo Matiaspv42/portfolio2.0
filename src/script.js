@@ -21,7 +21,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
  */
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
-
+const canvas2 = document.querySelector('.webgl2')
 
 // Scene
 const scene = new THREE.Scene()
@@ -31,7 +31,9 @@ const scene = new THREE.Scene()
  */
 const sizes = {
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
+    width2: document.querySelector('.section2').offsetWidth,
+    height2: document.querySelector('.section2').offsetHeight
 }
 const img1 = document.getElementById('project1')
 const img2 = document.getElementById('project2')
@@ -189,6 +191,14 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// const renderer2 = new THREE.WebGLRenderer({
+//     canvas: canvas,
+//     antialias: true,
+//     alpha: true
+// })
+// renderer2.setSize(sizes.width2, sizes.height2)
+// renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
 // // Postprocessing
 
 // const composer = new EffectComposer(renderer)
@@ -249,7 +259,6 @@ const tick = () =>
 
     // Render
     renderer.render(scene, camera)
-    // composer.render()
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
