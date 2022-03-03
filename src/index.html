@@ -25,18 +25,35 @@
                 <filter id="noise1" x='0%' y='0%' width='100%' height='100%'>
                     <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
                     <feDisplacementMap id="displacementMap1" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                    <feColorMatrix type="matrix" values=".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 1 0" id="colorMatrix1" >
+        </feColorMatrix>
                 </filter>
                 <filter id="noise2" x='0%' y='0%' width='100%' height='100%'>
                     <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
                     <feDisplacementMap id="displacementMap2" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                    <feColorMatrix type="matrix" values=".33 .33 .33 0 0
+                .33 .33 .33 0 0
+                .33 .33 .33 0 0
+                 0   0   0  1 0" id="colorMatrix2">
+        </feColorMatrix>
                 </filter>
                 <filter id="noise3" x='0%' y='0%' width='100%' height='100%'>
                     <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
                     <feDisplacementMap id="displacementMap3" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                    <feColorMatrix type="matrix" values=".33 .33 .33 0 0
+                .33 .33 .33 0 0
+                .33 .33 .33 0 0
+                 0   0   0  1 0" id="colorMatrix3">
+        </feColorMatrix>
                 </filter>
                 <filter id="noise4" x='0%' y='0%' width='100%' height='100%'>
                     <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
                     <feDisplacementMap id="displacementMap4" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                    <feColorMatrix type="matrix" values=".33 .33 .33 0 0
+                .33 .33 .33 0 0
+                .33 .33 .33 0 0
+                 0   0   0  1 0" id="colorMatrix4">
+        </feColorMatrix>
                 </filter>
             </svg> 
             <div class="projects">  

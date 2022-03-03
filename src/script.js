@@ -260,14 +260,22 @@ img1.addEventListener('mouseover',()=>{
     tl.to('#displacementMap1', {
         ease: "back",
         duration: 0.25,
-        attr: {scale: 100}
+        attr: {scale: 100,}
        })
     .to('#displacementMap1', {
         ease: "power4",
         duration: 0.25,
         attr: {scale: 0}
        }
-       )
+    )
+    tl.to('#colorMatrix1',{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        },
+    }, '<')
+
 })
 img2.addEventListener('mouseover',()=>{
     const tl = new Timeline()
@@ -281,7 +289,14 @@ img2.addEventListener('mouseover',()=>{
         duration: 0.25,
         attr: {scale: 0}
        }
-       )
+    )
+    tl.to('#colorMatrix2',{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        },
+    }, '<')
 })
 img3.addEventListener('mouseover',()=>{
     const tl = new Timeline()
@@ -296,6 +311,13 @@ img3.addEventListener('mouseover',()=>{
         attr: {scale: 0}
        }
        )
+    tl.to('#colorMatrix3',{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        },
+    }, '<')
 })
 img4.addEventListener('mouseover',()=>{
     const tl = new Timeline()
@@ -309,7 +331,14 @@ img4.addEventListener('mouseover',()=>{
         duration: 0.25,
         attr: {scale: 0}
        }
-       )
+    )
+    tl.to('#colorMatrix4',{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        },
+    }, '<')
 })
 
 

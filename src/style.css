@@ -66,33 +66,22 @@ header{
 }
 .projects img{
     width: 100%;
-    /* filter: grayscale(100%);
-    -webkit-filter: grayscale(100%); */
-    /* hover out */
-    /* transition: 200ms;
-    -webkit-transition: 200ms; */
 }
-/* .projects img:hover{
-    filter: none;
-    -webkit-filter: grayscale(0);
 
-   
-    transition: 200ms;
-    -webkit-transition: 200ms;
-} */
 
 #project1{
-    filter: url(#noise1);
+    filter: url(#noise1) ;
 }
 #project2{
-    filter: url(#noise2);
+    filter: url(#noise2) ;
 }
 #project3{
-    filter: url(#noise3);
+    filter: url(#noise3) ;
 }
 #project4{
-    filter: url(#noise4);
+    filter: url(#noise4) ;
 }
+
 .grid-col-span-5{
     grid-column: span 5;
 }
