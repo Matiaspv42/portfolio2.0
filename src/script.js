@@ -11,10 +11,16 @@ import { Reflector } from 'three/examples/jsm/objects/Reflector'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+
+import { gsap } from "gsap";
+import { Timeline } from 'gsap/gsap-core'
+
 /**
  * Debug
  */
  const gui = new dat.GUI()
+
+
 
 /**
  * Base
@@ -35,11 +41,6 @@ const sizes = {
     width2: document.querySelector('.section2').offsetWidth,
     height2: document.querySelector('.section2').offsetHeight
 }
-const img1 = document.getElementById('project1')
-const img2 = document.getElementById('project2')
-const img3 = document.getElementById('project3')
-const img4 = document.getElementById('project4')
-
 
 window.addEventListener('resize', () =>
 {
@@ -238,6 +239,79 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 // const customPass = new ShaderPass(myEffect);
 // customPass.renderToScreen = true;
 // composer.addPass(customPass);
+
+
+/**
+ * GSAP
+ */
+// add eventlistener to images
+
+const img1 = document.getElementById('project1')
+const img2 = document.getElementById('project2')
+const img3 = document.getElementById('project3')
+const img4 = document.getElementById('project4')
+
+const images = [img1,img2,img3,img4]
+// const turbulence = document.getElementById('turbulence')
+
+
+img1.addEventListener('mouseover',()=>{
+    const tl = new Timeline()
+    tl.to('#displacementMap1', {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100}
+       })
+    .to('#displacementMap1', {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       }
+       )
+})
+img2.addEventListener('mouseover',()=>{
+    const tl = new Timeline()
+    tl.to('#displacementMap2', {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100}
+       })
+    .to('#displacementMap2', {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       }
+       )
+})
+img3.addEventListener('mouseover',()=>{
+    const tl = new Timeline()
+    tl.to('#displacementMap3', {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100}
+       })
+    .to('#displacementMap3', {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       }
+       )
+})
+img4.addEventListener('mouseover',()=>{
+    const tl = new Timeline()
+    tl.to('#displacementMap4', {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100}
+       })
+    .to('#displacementMap4', {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       }
+       )
+})
+
 
 /**
  * Animate

@@ -21,14 +21,29 @@
     
         <section class="section2">
             <div class="title"><h2>Projects</h2></div>
-            <div class="projects">
-                <figure><img src="img/viajesChile.png" alt="Project Viajes Chile" class="grid-col-span-5 grid-item-right" id="project1"></figure>
-                <figure><img src="img/undergroundSociety.png" alt="Project Underground Society" class="grid-col-span-5 grid-item-left" id="project2">
-                </figure>
-                <figure><img src="img/animalesSalvajes.png" alt="Project Animales Salvajes" class="grid-col-span-5 grid-item-right" id="project3">
-                </figure>
-                <figure><img src="img/apiSuperHero.png" alt="Project Api Super Hero" class="grid-col-span-5 grid-item-left" id="project4"></figure>
-                
+            <svg>
+                <filter id="noise1" x='0%' y='0%' width='100%' height='100%'>
+                    <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
+                    <feDisplacementMap id="displacementMap1" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                </filter>
+                <filter id="noise2" x='0%' y='0%' width='100%' height='100%'>
+                    <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
+                    <feDisplacementMap id="displacementMap2" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                </filter>
+                <filter id="noise3" x='0%' y='0%' width='100%' height='100%'>
+                    <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
+                    <feDisplacementMap id="displacementMap3" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                </filter>
+                <filter id="noise4" x='0%' y='0%' width='100%' height='100%'>
+                    <feTurbulence baseFrequency="0.02 0.03" type="fractalNoise" result="NOISE" numOctaves="2" id="turbulence" />
+                    <feDisplacementMap id="displacementMap4" xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" in2="NOISE" scale="0" />
+                </filter>
+            </svg> 
+            <div class="projects">  
+                <img src="img/viajesChile.png" alt="Project Viajes Chile" class="grid-col-span-5 grid-item-right" id="project1">
+                <img src="img/undergroundSociety.png" alt="Project Underground Society" class="grid-col-span-5 grid-item-left" id="project2">
+                <img src="img/animalesSalvajes.png" alt="Project Animales Salvajes" class="grid-col-span-5 grid-item-right" id="project3">
+                <img src="img/apiSuperHero.png" alt="Project Api Super Hero" class="grid-col-span-5 grid-item-left" id="project4">
             </div>  
         </section>
         <section class="section3">
