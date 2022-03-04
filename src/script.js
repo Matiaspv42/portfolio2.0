@@ -14,6 +14,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
 import { gsap } from "gsap";
 import { Timeline } from 'gsap/gsap-core'
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 
 /**
  * Debug
@@ -242,7 +244,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 
 /**
- * GSAP
+ * GSAP & Animations
  */
 // add eventlistener to images
 
@@ -298,17 +300,24 @@ const img4 = document.getElementById('project4')
 const images = [img1,img2,img3,img4]
 // const turbulence = document.getElementById('turbulence')
 
+images.forEach((element,index)=> {
+    element.addEventListener('mouseover',()=>blackToColor(index+1))
+    element.addEventListener('mouseout',()=>colorToBlack(index+1))
+})
 
-img1.addEventListener('mouseover', ()=>blackToColor(1))
-img2.addEventListener('mouseover',()=>{blackToColor(2)})
-img3.addEventListener('mouseover',()=>{blackToColor(3)})
-img4.addEventListener('mouseover',()=>{blackToColor(4)})
-
-// mouseOut event
-img1.addEventListener('mouseout',()=>colorToBlack(1))
-img2.addEventListener('mouseout',()=>colorToBlack(2))
-img3.addEventListener('mouseout',()=>colorToBlack(3))
-img4.addEventListener('mouseout',()=>colorToBlack(4))
+// Scroll Animation for sphere
+gsap.registerPlugin(ScrollTrigger)
+let scrollY = window.scrollY
+gsap.to(material1.uniforms.uStrengthNoise, {
+    scrollTrigger: {
+        trigger:'.section2',
+        start:'top center',
+        toggleActions:'play none none none',
+        markers:true,
+    },
+    value:10,
+    duration:3.5
+})
 
 /**
  * Animate
