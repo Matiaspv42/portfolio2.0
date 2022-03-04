@@ -20,7 +20,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 /**
  * Debug
  */
- const gui = new dat.GUI()
+//  const gui = new dat.GUI()
 
 
 
@@ -72,9 +72,9 @@ scene.add(camera)
 
 
 // Debug
-gui.add(camera.position, 'x').min(-10).max(10).step(0.01).name('camera position x')
-gui.add(camera.position, 'y').min(-10).max(10).step(0.01).name('camera position y')
-gui.add(camera.position, 'z').min(-10).max(10).step(0.01).name('camera position z')
+// gui.add(camera.position, 'x').min(-10).max(10).step(0.01).name('camera position x')
+// gui.add(camera.position, 'y').min(-10).max(10).step(0.01).name('camera position y')
+// gui.add(camera.position, 'z').min(-10).max(10).step(0.01).name('camera position z')
 
 
 
@@ -143,9 +143,9 @@ scene.add(polyhedron)
 
 // Debug
 
-gui.add(polyhedron.position, 'x').min(-10).max(10).step(0.01).name('poly position x')
-gui.add(polyhedron.position, 'y').min(-10).max(10).step(0.01).name('poly position y')
-gui.add(polyhedron.position, 'z').min(-10).max(10).step(0.01).name('poly position z')
+// gui.add(polyhedron.position, 'x').min(-10).max(10).step(0.01).name('poly position x')
+// gui.add(polyhedron.position, 'y').min(-10).max(10).step(0.01).name('poly position y')
+// gui.add(polyhedron.position, 'z').min(-10).max(10).step(0.01).name('poly position z')
 
 // Mirror
 // const planeGeometry = new THREE.PlaneGeometry(40,40,50,50)
@@ -304,20 +304,143 @@ images.forEach((element,index)=> {
     element.addEventListener('mouseover',()=>blackToColor(index+1))
     element.addEventListener('mouseout',()=>colorToBlack(index+1))
 })
+gsap.registerPlugin(ScrollTrigger)
+
+// Scroll snapping
+
+// gsap.to('.section1',{
+//     scrollTrigger:{
+//         trigger: '.section1',
+//         start: 'bottom 90%',
+//         markers:true,
+//         toggleActions:'play none none none',
+//     },
+
+// })
+
+// Scroll animation for images
+
+// const animatingProjects = (projectNumber)=>{
+//     if(projectNumber%2==0){
+//         const timelineProjects = new Timeline({
+//             scrollTrigger:{
+                // scroller: '.page',
+//                 trigger: `#project${projectNumber}`,
+//                 start: 'top 90%',
+//                 markers:true,
+//                 toggleActions:'play none none none',
+//             }
+//         }).from(
+//             `#project${projectNumber}`,{
+//                 x:500, opacity:0, duration:1.5
+//              }
+//         )
+//     }else{
+//         const timelineProjects = new Timeline({
+//             scrollTrigger:{
+//                 // scroller: '.page',
+//                 trigger: `#project${projectNumber}`,
+//                 start: 'top 90%',
+//                 markers:true,
+//                 toggleActions:'play none none none',
+//             }
+//         }).from(
+//             `#project${projectNumber}`,{
+//                 x:-500, opacity:0, duration:1.5
+//              }
+//         )
+//     }
+// }
+
+// for (let i=1 ; i<5; i++){
+//     animatingProjects(i)
+// }
+
+const timelineProjects1 = new Timeline({
+    scrollTrigger:{
+        scroller: '.page',
+        trigger: `#project1`,
+        start: 'top 75%',
+        // markers:true,
+        toggleActions:'play pause none none',
+    }
+}).from(
+    `#project1`,{
+        x:500, opacity:0, duration:1.5
+     }
+)
+const timelineProjects2 = new Timeline({
+    scrollTrigger:{
+        scroller: '.page',
+        trigger: `#project2`,
+        start: 'top 75%',
+        // markers:true,
+        toggleActions:'play pause none none',
+    }
+}).from(
+    `#project2`,{
+        x:-500, opacity:0, duration:1.5
+     }
+)
+const timelineProjects3 = new Timeline({
+    scrollTrigger:{
+        scroller: '.page',
+        trigger: `#project3`,
+        start: 'top 75%',
+        // markers:true,
+        toggleActions:'play pause none none',
+    }
+}).from(
+    `#project3`,{
+        x:500, opacity:0, duration:1.5
+     }
+)
+const timelineProjects4 = new Timeline({
+    scrollTrigger:{
+        scroller: '.page',
+        trigger: `#project4`,
+        start: 'top 75%',
+        // markers:true,
+        toggleActions:'play pause none none',
+    }
+}).from(
+    `#project4`,{
+        x:-500, opacity:0, duration:1.5
+     }
+)
 
 // Scroll Animation for sphere
-gsap.registerPlugin(ScrollTrigger)
-let scrollY = window.scrollY
-gsap.to(material1.uniforms.uStrengthNoise, {
-    scrollTrigger: {
+
+
+const tl2 = new Timeline(
+    {scrollTrigger: {
+        scroller: '.page',
         trigger:'.section2',
         start:'top center',
-        toggleActions:'play none none none',
-        markers:true,
-    },
-    value:10,
-    duration:3.5
+        end: 'bottom center',
+        toggleActions:'play pause none none',
+    },}
+).to(material1.uniforms.uStrengthNoise, {
+    ease: 'power3',
+    value:5,
+    duration:1
 })
+
+const tl3 = new Timeline({
+    scrollTrigger: {
+        scroller: '.page',
+        trigger:'.section3',
+        start:'top center',
+        end: 'bottom center',
+        toggleActions:'play pause none none',
+    },
+    }) 
+    .to(material1.uniforms.uStrengthNoise ,{
+        ease: 'power3',
+        value:10,
+        duration:3.5
+}
+)
 
 /**
  * Animate

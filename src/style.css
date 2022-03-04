@@ -2,15 +2,16 @@
 {
     margin: 0;
     padding: 0;
-    border: 1px solid red;
-    /* border: 0; */
+    /* border: 1px solid red; */
+    border: 0;
 }
 
 
 html{
     background-color: #fdfdfdd8;
     font-family: 'Montserrat', sans-serif;
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-x: hidden;
 }
 
 html p{
@@ -23,6 +24,7 @@ html p{
     overflow-y: scroll;
     height:100vh;
 }
+
 .page section{
     scroll-snap-align: start;
 }
@@ -45,6 +47,12 @@ header{
     height: 100vh;
     width: 100vw;
 }
+h1{
+    font-size: 4.5rem;
+}
+h4{
+    font-size: 2.5rem;
+}
 
 .section1{
     height: 100vh;
@@ -53,11 +61,24 @@ header{
 }
 
 .section1 h1,h4{
-    width: 30vw;
-    margin: 1rem;
+    width: 60vw;
+    margin-left: 50px;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 .section1 header{
     vertical-align: middle;
+}
+.section2{
+    margin-top: 200px;
+}
+.section2 .title{
+    width: 50%;
+    margin-left:50px;
+    margin-top: 10%;
+}
+h2{
+    font-size: 3.3rem;
 }
 .projects{
     display: grid;
@@ -66,6 +87,7 @@ header{
     row-gap: 40px;
     padding: 50px;
     justify-items: center;
+    padding-bottom: 200px;
 }
 .projects img{
     width: 100%;
@@ -98,10 +120,28 @@ header{
 
 /* remember to fix the width when text is done */
 .section3{
+    margin-top: 200px;
     height: 100vh;
     width: 97vw;
+}
+.section3 h2{
+    margin-left: 50px;
+    width: 50%;
+    margin-top: 10%;
+}
+.info{
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    padding: 2rem;
+}
+.info p{
+    margin-left: 50px;
 }
 
 svg{
     position: absolute;
 }
+
