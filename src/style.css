@@ -12,6 +12,11 @@ body
 
 html{
     background-color: #fdfdfdd8;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html p{
+    font-family: 'Esteban', serif;
 }
 
 .page{
@@ -20,18 +25,18 @@ html{
 
 .webgl
 {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     outline: none;
     z-index: -2;
 }
-.webgl2
+/* .webgl2
 {
     position: absolute;
     outline: none;
     z-index: -2;
-}
+} */
 header{
     height: 100vh;
     width: 100vw;

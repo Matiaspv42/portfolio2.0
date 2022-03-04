@@ -246,6 +246,50 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 // add eventlistener to images
 
+const blackToColor = (number)=>{
+    const tl = new Timeline()
+    tl.to(`#displacementMap${number}`, {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100,}
+       })
+    .to(`#displacementMap${number}`, {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       }
+    )
+    tl.to(`#colorMatrix${number}`,{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+        },
+    }, '<')
+}
+
+const colorToBlack = (number)=>{
+    const tl = new Timeline()
+    tl.to(`#displacementMap${number}`, {
+        ease: "back",
+        duration: 0.25,
+        attr: {scale: 100,}
+       })
+    .to(`#displacementMap${number}`, {
+        ease: "power4",
+        duration: 0.25,
+        attr: {scale: 0}
+       })
+    tl.to(`#colorMatrix${number}`,{
+        ease:'back',
+        duration:0.25,
+        attr:{
+            values: ".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 1 0"
+        },
+    }, '<')
+}
+
+
 const img1 = document.getElementById('project1')
 const img2 = document.getElementById('project2')
 const img3 = document.getElementById('project3')
@@ -255,92 +299,16 @@ const images = [img1,img2,img3,img4]
 // const turbulence = document.getElementById('turbulence')
 
 
-img1.addEventListener('mouseover',()=>{
-    const tl = new Timeline()
-    tl.to('#displacementMap1', {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100,}
-       })
-    .to('#displacementMap1', {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       }
-    )
-    tl.to('#colorMatrix1',{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-        },
-    }, '<')
+img1.addEventListener('mouseover', ()=>blackToColor(1))
+img2.addEventListener('mouseover',()=>{blackToColor(2)})
+img3.addEventListener('mouseover',()=>{blackToColor(3)})
+img4.addEventListener('mouseover',()=>{blackToColor(4)})
 
-})
-img2.addEventListener('mouseover',()=>{
-    const tl = new Timeline()
-    tl.to('#displacementMap2', {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100}
-       })
-    .to('#displacementMap2', {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       }
-    )
-    tl.to('#colorMatrix2',{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-        },
-    }, '<')
-})
-img3.addEventListener('mouseover',()=>{
-    const tl = new Timeline()
-    tl.to('#displacementMap3', {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100}
-       })
-    .to('#displacementMap3', {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       }
-       )
-    tl.to('#colorMatrix3',{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-        },
-    }, '<')
-})
-img4.addEventListener('mouseover',()=>{
-    const tl = new Timeline()
-    tl.to('#displacementMap4', {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100}
-       })
-    .to('#displacementMap4', {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       }
-    )
-    tl.to('#colorMatrix4',{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-        },
-    }, '<')
-})
-
+// mouseOut event
+img1.addEventListener('mouseout',()=>colorToBlack(1))
+img2.addEventListener('mouseout',()=>colorToBlack(2))
+img3.addEventListener('mouseout',()=>colorToBlack(3))
+img4.addEventListener('mouseout',()=>colorToBlack(4))
 
 /**
  * Animate
