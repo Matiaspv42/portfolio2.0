@@ -79,8 +79,8 @@ scene.add(camera)
 
 
 // Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = true
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
 
 
 /**
@@ -124,7 +124,7 @@ material1.extensions.derivatives = true;
 
 const polyhedron = new THREE.Mesh(dodecahedron, material1)
 polyhedron.position.y = 0
-polyhedron.position.x = 4
+polyhedron.position.x = 10
 
 scene.add(polyhedron)
 
@@ -177,10 +177,6 @@ scene.add(polyhedron)
 // gui.add(mirror.position, 'z').min(-10).max(10).step(0.01).name('mirror position z')
 
 
-/**
- * Light
- */
-
 
 
 /**
@@ -193,54 +189,6 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-// const renderer2 = new THREE.WebGLRenderer({
-//     canvas: canvas,
-//     antialias: true,
-//     alpha: true
-// })
-// renderer2.setSize(sizes.width2, sizes.height2)
-// renderer2.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-// // Postprocessing
-
-// const composer = new EffectComposer(renderer)
-// const renderPass = new RenderPass(scene,camera)
-// composer.addPass(renderPass)
-
-// var counter = 0.0;
-// const myEffect = {
-//     uniforms: {
-//         "tDiffuse": { value: null },
-//         "scrollSpeed": { value: null },
-//     },
-//     vertexShader: `
-//     varying vec2 vUv;
-//     void main() {
-//         vUv = uv;
-//         gl_Position = projectionMatrix 
-//         * modelViewMatrix 
-//         * vec4( position, 1.0 );
-//     }
-//     `,
-//     fragmentShader: `
-//     uniform sampler2D tDiffuse;
-//     varying vec2 vUv;
-//     uniform float scrollSpeed;
-//     void main(){
-//         vec2 newUV = vUv;
-//         float area = smoothstep(0.4,0.,vUv.y);
-//         area = pow(area,4.);
-//         newUV.x -= (vUv.x - 0.5)*0.1*area*scrollSpeed;
-//         gl_FragColor = texture2D( tDiffuse, newUV);
-//     //   gl_FragColor = vec4(area,0.,0.,1.);
-//     }
-//     `
-// }
-
-// const customPass = new ShaderPass(myEffect);
-// customPass.renderToScreen = true;
-// composer.addPass(customPass);
 
 
 /**
@@ -358,7 +306,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 const timelineProjects1 = new Timeline({
     scrollTrigger:{
-        scroller: '.page',
+        // scroller: '.page',
         trigger: `#project1`,
         start: 'top 75%',
         // markers:true,
@@ -371,7 +319,7 @@ const timelineProjects1 = new Timeline({
 )
 const timelineProjects2 = new Timeline({
     scrollTrigger:{
-        scroller: '.page',
+        // scroller: '.page',
         trigger: `#project2`,
         start: 'top 75%',
         // markers:true,
@@ -384,7 +332,7 @@ const timelineProjects2 = new Timeline({
 )
 const timelineProjects3 = new Timeline({
     scrollTrigger:{
-        scroller: '.page',
+        // scroller: '.page',
         trigger: `#project3`,
         start: 'top 75%',
         // markers:true,
@@ -397,7 +345,7 @@ const timelineProjects3 = new Timeline({
 )
 const timelineProjects4 = new Timeline({
     scrollTrigger:{
-        scroller: '.page',
+        // scroller: '.page',
         trigger: `#project4`,
         start: 'top 75%',
         // markers:true,
@@ -414,33 +362,53 @@ const timelineProjects4 = new Timeline({
 
 const tl2 = new Timeline(
     {scrollTrigger: {
-        scroller: '.page',
+        // scroller: '.page',
         trigger:'.section2',
         start:'top center',
         end: 'bottom center',
         toggleActions:'play pause none none',
     },}
-).to(material1.uniforms.uStrengthNoise, {
-    ease: 'power3',
-    value:5,
-    duration:1
-})
+    ).to(camera.position,{
+        ease:'power0',
+        z:0,
+        y:-20,
+        duration:2.4
+    }).to(material1.uniforms.uStrengthNoise, {
+        ease: 'power3',
+        value:7,
+        duration:2
+    })
+    // .to(camera.position,{
+    //     ease: 'power3',
+    //     z:-20,
+    //     y:0,
+    //     duration:3.0
+    // },"<")
 
 const tl3 = new Timeline({
     scrollTrigger: {
-        scroller: '.page',
+        // scroller: '.page',
         trigger:'.section3',
         start:'top center',
         end: 'bottom center',
         toggleActions:'play pause none none',
     },
-    }) 
+    }).to(camera.position,{
+        ease: 'power0',
+        z:35,
+        y:0,
+        duration:2.4
+    })
+    .to(polyhedron.position,{
+        ease: 'power0',
+        x:25,
+        duration:2.4
+    },'<')
     .to(material1.uniforms.uStrengthNoise ,{
         ease: 'power3',
-        value:10,
-        duration:3.5
-}
-)
+        value:12,
+        duration:2})
+    
 
 /**
  * Animate
@@ -458,7 +426,7 @@ const tick = () =>
     material1.uniforms.uTime.value = elapsedTime
 
     // Update controls
-    // controls.update()
+    controls.update()
 
     // Render
     renderer.render(scene, camera)
