@@ -11,7 +11,7 @@ html{
     background-color: #fdfdfdd8;
     font-family: 'Montserrat', sans-serif;
     /* overflow: hidden; */
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
 }
 
 html p{
@@ -43,10 +43,7 @@ html p{
     outline: none;
     z-index: -2;
 } */
-header{
-    height: 100vh;
-    width: 100vw;
-}
+
 
 h1{
     font-size: 4.5rem;
@@ -56,12 +53,23 @@ h4{
 }
 
 .section1{
-    height: 100vh;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.section1-wrapper{
+    height: 99vh;
 }
 .navbar{
     align-items: flex-start;
-    width: 100wh;
+    
+    height: 10%;
+    display:flex;
+    justify-content: flex-end;
+}
+.navbar a{
+    margin: 20px 20px;
+    font-size: 20px;
 }
 
 .section1 h1,h4{
@@ -70,16 +78,20 @@ h4{
     margin-bottom: 0;
     margin-top: 0;
 }
-.section1 header{
-    vertical-align: middle;
+
+.section1 .header-wrap{
+    height:85% ;
+    display: flex;
+    align-items: center;
 }
+
 .section2{
     margin-top: 50px;
 }
 .section2 .title{
     width: 50%;
     margin-left:50px;
-    padding-top: 10%;
+    margin-top: 5%;
 }
 h2{
     font-size: 3.3rem;
@@ -127,22 +139,37 @@ h2{
     margin-top: 50px;
     height: 100vh;
     width: 97vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .section3 h2{
     margin-left: 50px;
     width: 50%;
     padding-top: 10%;
+ 
+}
+.info-wrapper{
+    height: 99vh;
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .info{
-    height: 40vh;
+    height: 99vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 50%;
     padding: 2rem;
 }
 .info p{
+    margin-top: 20%;
+}
+.info h2,p{
     margin-left: 50px;
+    width: 90%;
 }
 
 svg{
