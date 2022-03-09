@@ -194,67 +194,204 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * GSAP & Animations
  */
+
+// Images
+
+const canvasImages = document.getElementById('images-canvas')
+const ctx = canvasImages.getContext('2d')
+const links = [... document.querySelectorAll('li')]
+const lerp = (start,end,time) =>{
+    return start*(1-time) + end*time
+}
+for(let i =0 ; i<links.length ; i++){
+    links[i].addEventListener('mouseover',()=>{
+        for(let j =0;j<links.length;j++){
+            if(j!== i){
+                links[j].style.opacity =0.2;
+                links[j].style.zIndex=0;
+            }else{
+                links[j].style.opacity=1;
+                links[j].style.zIndex=3
+            }
+        }
+    })
+    links[i].addEventListener('mouseleave',()=>{
+        for(let i = 0; i<links.length;i++){
+            links[i].style.opacity = 1;
+        }
+    })
+}
+let imgIndex = 0;
+// loading images into array
+const imgs = [
+    '/img/viajesChile.png',
+    '/img/animalesSalvajes.png',
+    '/img/apiSuperHero.png',
+    '/img/undergroundSociety.png'
+]
+let imgArr = [];
+// canvas mousemove variables
+let targetX = 0;
+let targetY = 0;
+let currentX = 0;
+let currentY = 0;
+window.addEventListener('mousemove',(e)=>{
+    targetX = e.clientX;
+    targetY = e.clientY;
+})
+imgs.forEach((img,idx)=>{
+    let elImage = new Image(300)
+    elImage.src = img
+    elImage.classList.add('project-image')
+    document.body.appendChild(elImage)
+    imgArr.push(elImage)
+})
+
+// draw images to the canvas
+let percent = 0
+let target = 0
+function drawImage(index){
+    let {width,height} = imgArr[index].getBoundingClientRect()
+    canvasImages.width = width * window.devicePixelRatio;
+    canvasImages.height = height * window.devicePixelRatio;
+    canvasImages.style.width = `${width}px`
+    canvasImages.style.height = `${height}px`
+    
+     // pixelate by diabling the smoothing
+     ctx.webkitImageSmoothingEnabled = false;
+     ctx.mozImageSmoothingEnabled = false;
+     ctx.msSmoothingEnabled = false;
+     ctx.imageSmoothingEnabled = false;
+    if(target === 1){ // Link has been hovered
+        // 2 speeds to make the effect more gradual
+        if(percent < 0.2){
+            percent += .01;
+        }else if(percent < 1){
+            percent += .1;
+        }
+    }else if(target === 0){
+        if(percent > 0.2){
+            percent -= .3
+        }else if( percent > 0){
+            percent -= .01;
+        }
+    }
+
+    let scaledWidth = width * percent;
+    let scaledHeight = height * percent;
+
+    if(percent >= 1){
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        ctx.drawImage(imgArr[index], 0, 0, width, height);
+    }else{
+        ctx.drawImage(imgArr[index], 0, 0, scaledWidth, scaledHeight);
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        if(canvasImages.width !== 0 && canvasImages.height !== 0){
+            ctx.drawImage(canvasImages, 0, 0, scaledWidth, scaledHeight, 0, 0, width, height)
+        }
+    }
+}
+for(let i = 0; i < links.length; i++){
+    links[i].addEventListener('mouseover', () => {
+        for(let j = 0; j < links.length; j++){
+            if(j !== i){
+                links[j].style.opacity = 0.2;
+                links[j].style.zIndex = 0;
+            }else{
+                links[j].style.opacity = 1;
+                links[j].style.zIndex = 3;
+            }
+        }
+    })
+
+    links[i].addEventListener('mouseleave', () => {
+        for(let i = 0; i < links.length; i++){
+            links[i].style.opacity = 1;
+        }
+    })
+
+    links[i].addEventListener('mouseenter', () => {
+        imgIndex = i;
+        target = 1
+    });
+
+    links[i].addEventListener('mouseleave', () => {
+        target = 0;
+    })
+}
+function animate(){
+    
+    currentX = lerp(currentX, targetX, 0.075);
+    currentY = lerp(currentY, targetY, 0.075);
+    let { width, height} = imgArr[imgIndex].getBoundingClientRect();
+    canvasImages.style.transform = `translate3d(${currentX - (width / 2)}px, ${currentY - (height / 2)}px, 0)`;
+    drawImage(imgIndex);
+    window.requestAnimationFrame(animate);
+}
+
+animate()
+
 // add eventlistener to images
 
-const blackToColor = (number)=>{
-    const tl = new Timeline()
-    tl.to(`#displacementMap${number}`, {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100,}
-       })
-    .to(`#displacementMap${number}`, {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       }
-    )
-    tl.to(`#colorMatrix${number}`,{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-        },
-    }, '<')
-}
+// const blackToColor = (number)=>{
+//     const tl = new Timeline()
+//     tl.to(`#displacementMap${number}`, {
+//         ease: "back",
+//         duration: 0.25,
+//         attr: {scale: 100,}
+//        })
+//     .to(`#displacementMap${number}`, {
+//         ease: "power4",
+//         duration: 0.25,
+//         attr: {scale: 0}
+//        }
+//     )
+//     tl.to(`#colorMatrix${number}`,{
+//         ease:'back',
+//         duration:0.25,
+//         attr:{
+//             values: "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+//         },
+//     }, '<')
+// }
 
-const colorToBlack = (number)=>{
-    const tl = new Timeline()
-    tl.to(`#displacementMap${number}`, {
-        ease: "back",
-        duration: 0.25,
-        attr: {scale: 100,}
-       })
-    .to(`#displacementMap${number}`, {
-        ease: "power4",
-        duration: 0.25,
-        attr: {scale: 0}
-       })
-    tl.to(`#colorMatrix${number}`,{
-        ease:'back',
-        duration:0.25,
-        attr:{
-            values: ".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 1 0"
-        },
-    }, '<')
-}
+// const colorToBlack = (number)=>{
+//     const tl = new Timeline()
+//     tl.to(`#displacementMap${number}`, {
+//         ease: "back",
+//         duration: 0.25,
+//         attr: {scale: 100,}
+//        })
+//     .to(`#displacementMap${number}`, {
+//         ease: "power4",
+//         duration: 0.25,
+//         attr: {scale: 0}
+//        })
+//     tl.to(`#colorMatrix${number}`,{
+//         ease:'back',
+//         duration:0.25,
+//         attr:{
+//             values: ".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 1 0"
+//         },
+//     }, '<')
+// }
 
 
-const img1 = document.getElementById('project1')
-const img2 = document.getElementById('project2')
-const img3 = document.getElementById('project3')
-const img4 = document.getElementById('project4')
+// const img1 = document.getElementById('project1')
+// const img2 = document.getElementById('project2')
+// const img3 = document.getElementById('project3')
+// const img4 = document.getElementById('project4')
 
-const images = [img1,img2,img3,img4]
-// const turbulence = document.getElementById('turbulence')
+// const images = [img1,img2,img3,img4]
+// // const turbulence = document.getElementById('turbulence')
 
-images.forEach((element,index)=> {
-    element.addEventListener('mouseover',()=>blackToColor(index+1))
-    element.addEventListener('mouseout',()=>colorToBlack(index+1))
-})
-gsap.registerPlugin(ScrollTrigger)
+// images.forEach((element,index)=> {
+//     element.addEventListener('mouseover',()=>blackToColor(index+1))
+//     element.addEventListener('mouseout',()=>colorToBlack(index+1))
+// })
+// gsap.registerPlugin(ScrollTrigger)
 
-// Scroll snapping
+// Scroll snapping MANTENER DESDE ACA ABAJO COMENTADO
 
 // gsap.to('.section1',{
 //     scrollTrigger:{
@@ -304,110 +441,117 @@ gsap.registerPlugin(ScrollTrigger)
 //     animatingProjects(i)
 // }
 
-const timelineProjects1 = new Timeline({
-    scrollTrigger:{
-        // scroller: '.page',
-        trigger: `#project1`,
-        start: 'top 75%',
-        // markers:true,
-        toggleActions:'play pause none none',
-    }
-}).from(
-    `#project1`,{
-        x:500, opacity:0, duration:1.5
-     }
-)
-const timelineProjects2 = new Timeline({
-    scrollTrigger:{
-        // scroller: '.page',
-        trigger: `#project2`,
-        start: 'top 75%',
-        // markers:true,
-        toggleActions:'play pause none none',
-    }
-}).from(
-    `#project2`,{
-        x:-500, opacity:0, duration:1.5
-     }
-)
-const timelineProjects3 = new Timeline({
-    scrollTrigger:{
-        // scroller: '.page',
-        trigger: `#project3`,
-        start: 'top 75%',
-        // markers:true,
-        toggleActions:'play pause none none',
-    }
-}).from(
-    `#project3`,{
-        x:500, opacity:0, duration:1.5
-     }
-)
-const timelineProjects4 = new Timeline({
-    scrollTrigger:{
-        // scroller: '.page',
-        trigger: `#project4`,
-        start: 'top 75%',
-        // markers:true,
-        toggleActions:'play pause none none',
-    }
-}).from(
-    `#project4`,{
-        x:-500, opacity:0, duration:1.5
-     }
-)
+// HASTA ACAAAAAAA
+
+// const timelineProjects1 = new Timeline({
+//     scrollTrigger:{
+//         // scroller: '.page',
+//         trigger: `#project1`,
+//         start: 'top 75%',
+//         // markers:true,
+//         toggleActions:'play pause none none',
+//     }
+// }).from(
+//     `#project1`,{
+//         x:500, opacity:0, duration:1.5
+//      }
+// )
+// const timelineProjects2 = new Timeline({
+//     scrollTrigger:{
+//         // scroller: '.page',
+//         trigger: `#project2`,
+//         start: 'top 75%',
+//         // markers:true,
+//         toggleActions:'play pause none none',
+//     }
+// }).from(
+//     `#project2`,{
+//         x:-500, opacity:0, duration:1.5
+//      }
+// )
+// const timelineProjects3 = new Timeline({
+//     scrollTrigger:{
+//         // scroller: '.page',
+//         trigger: `#project3`,
+//         start: 'top 75%',
+//         // markers:true,
+//         toggleActions:'play pause none none',
+//     }
+// }).from(
+//     `#project3`,{
+//         x:500, opacity:0, duration:1.5
+//      }
+// )
+// const timelineProjects4 = new Timeline({
+//     scrollTrigger:{
+//         // scroller: '.page',
+//         trigger: `#project4`,
+//         start: 'top 75%',
+//         // markers:true,
+//         toggleActions:'play pause none none',
+//     }
+// }).from(
+//     `#project4`,{
+//         x:-500, opacity:0, duration:1.5
+//      }
+// )
 
 // Scroll Animation for sphere
 
 
-const tl2 = new Timeline(
-    {scrollTrigger: {
-        // scroller: '.page',
-        trigger:'.section2',
-        start:'top center',
-        end: 'bottom center',
-        toggleActions:'play pause none none',
-    },}
-    ).to(camera.position,{
-        ease:'power0',
-        z:0,
-        y:-20,
-        duration:2.4
-    }).to(material1.uniforms.uStrengthNoise, {
-        ease: 'power3',
-        value:7,
-        duration:2
-    })
+// const tl2 = new Timeline(
+//     {scrollTrigger: {
+//         // scroller: '.page',
+//         trigger:'.section2',
+//         start:'top center',
+//         end: 'bottom center',
+//         toggleActions:'play pause none none',
+//     },}
+//     ).to(camera.position,{
+//         ease:'power0',
+//         z:0,
+//         y:-20,
+//         duration:2.4
+//     }).to(material1.uniforms.uStrengthNoise, {
+//         ease: 'power3',
+//         value:7,
+//         duration:2
+//     })
+
+// keep this commented
     // .to(camera.position,{
     //     ease: 'power3',
     //     z:-20,
     //     y:0,
     //     duration:3.0
     // },"<")
+// up to this comment
 
-const tl3 = new Timeline({
-    scrollTrigger: {
-        // scroller: '.page',
-        trigger:'.section3',
-        start:'top center',
-        end: 'bottom center',
-        toggleActions:'play pause none none',
-    },
-    }).to(camera.position,{
-        ease: 'power0',
-        z:35,
-        y:0,
-        duration:2.4
-    })
-    .to(polyhedron.position,{
-        ease: 'power0',
-        x:25,
-        duration:2.4
-    },'<')
-    .to(material1.uniforms.uStrengthNoise ,{
-        ease: 'power3',
-        value:12,
-        duration:2})
+
+
+// const tl3 = new Timeline({
+//     scrollTrigger: {
+//         // scroller: '.page',
+//         trigger:'.section3',
+//         start:'top center',
+//         end: 'bottom center',
+//         toggleActions:'play pause none none',
+//     },
+//     }).to(camera.position,{
+//         ease: 'power0',
+//         z:35,
+//         y:0,
+//         duration:2.4
+//     })
+//     .to(polyhedron.position,{
+//         ease: 'power0',
+//         x:25,
+//         duration:2.4
+//     },'<')
+//     .to(material1.uniforms.uStrengthNoise ,{
+//         ease: 'power3',
+//         value:12,
+//         duration:2})
     
 
 /**
