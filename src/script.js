@@ -17,6 +17,19 @@ import { Timeline } from 'gsap/gsap-core'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
+function isElementInViewport (el) {
+
+
+    var rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+    );
+}
+
 /**
  * Debug
  */
@@ -29,7 +42,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  */
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
-const canvas2 = document.querySelector('.webgl2')
+
 
 // Scene
 const scene = new THREE.Scene()
@@ -240,7 +253,7 @@ window.addEventListener('mousemove',(e)=>{
     targetY = e.clientY;
 })
 imgs.forEach((img,idx)=>{
-    let elImage = new Image(300)
+    let elImage = new Image(500)
     elImage.src = img
     elImage.classList.add('project-image')
     document.body.appendChild(elImage)
@@ -306,7 +319,7 @@ for(let i = 0; i < links.length; i++){
 
     links[i].addEventListener('mouseleave', () => {
         for(let i = 0; i < links.length; i++){
-            links[i].style.opacity = 1;
+            links[i].style.opacity = 0.5;
         }
     })
 
@@ -319,17 +332,26 @@ for(let i = 0; i < links.length; i++){
         target = 0;
     })
 }
+const list = document.getElementById('list')
 function animate(){
     
-    currentX = lerp(currentX, targetX, 0.075);
-    currentY = lerp(currentY, targetY, 0.075);
+    // currentX = lerp(currentX, targetX, 1);
+    // currentY = lerp(currentY, targetY, 1);
+    currentX = targetX
+    currentY = targetY
     let { width, height} = imgArr[imgIndex].getBoundingClientRect();
-    canvasImages.style.transform = `translate3d(${currentX - (width / 2)}px, ${currentY - (height / 2)}px, 0)`;
+    
+    if(isElementInViewport(list)){
+        canvasImages.style.transform = `translate3d(${currentX - (width / 2)}px, ${currentY - (height / 2)}px, 0)`;
+    }
     drawImage(imgIndex);
     window.requestAnimationFrame(animate);
 }
 
+
+
 animate()
+
 
 // add eventlistener to images
 

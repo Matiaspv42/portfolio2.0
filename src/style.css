@@ -2,8 +2,9 @@
 {
     margin: 0;
     padding: 0;
+    
+    border: 0;
     border: 1px solid red;
-    /* border: 0; */
 }
 
 
@@ -11,8 +12,8 @@ html{
     background-color: #f8f8f8;
     color: #29292a;
     font-family: 'Montserrat', sans-serif;
-    /* overflow: hidden; */
-    overflow-x: hidden;
+    overflow: hidden;
+    
 }
 
 html p{
@@ -22,13 +23,14 @@ html p{
 
 .page{
     position: relative;
-    /* scroll-snap-type: y mandatory ;
+    scroll-snap-type: y mandatory ;
     overflow-y: scroll;
-    height:100vh; */
+    overflow-x: hidden;
+    height:100vh;
 }
 
 .page section{
-    /* scroll-snap-align: start; */
+    scroll-snap-align: start;
 }
 
 .webgl
@@ -55,6 +57,7 @@ h4{
 }
 
 .section1{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,20 +75,24 @@ h4{
     height: 70%;
     display: flex;
     align-items: center;
-    background-color: #29292a;
     padding: 0px 30px;
 }
 .navbar a{
     margin: 20px 10px;
     font-size: 20px;
-    color: #f8f8f8;
+    color: #29292a;
 }
-
+.section1 .header{
+    padding-bottom: 150px;
+}
 .section1 h1,h4{
     width: 60vw;
     margin-left: 50px;
     margin-bottom: 0;
     margin-top: 0;
+}
+.section1 h4::after{
+    content: '🧑🏻‍💻';
 }
 
 .section1 .header-wrap{
@@ -97,25 +104,44 @@ h4{
 .section2{
     /* margin-top: 50px; */
     position: relative;
+    height: 100vh;
+    /* display: flex;
+    flex-direction: column; */
 }
+
+.section2 .projects-title{
+    padding-top: 50px;
+}
+
 canvas .projects-canvas{
-    position: fixed;
-    z-index: 2;
+    position: relative;
+    z-index: 200;
     pointer-events: none;
 }
-/* .section2 .title{
-    width: 50%;
-    margin-left:50px;
-    margin-top: 5%;
-} */
+
+
+.section2 ul{
+    position: relative;
+    list-style: none;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 .section2 li{
     position: relative;
     cursor: pointer;
+    font-size: 3rem;
+    opacity: 0.5;
+    width: 70%;
+}
+.border-bottom{
+    border-bottom: 2px solid #29292a ;
 }
 .project-image{
     opacity: 0%;
     position: absolute;
-    top: -100%;
+    top: -1000%;
     pointer-events: none;
 }
 h2{
@@ -160,8 +186,8 @@ h2{
 } */
 
 .projects-wrapper{
-    width: 100vw;
     height: 100vh;
+    margin-left: 50px;
 }
 /* remember to fix the width when text is done */
 .section3{
@@ -187,15 +213,18 @@ h2{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 55%;
+    width: 600px;
     padding: 30px;
-    background-color: #29292a;
-    color: #f8f8f8;
+    color:  #29292a;
+    margin-left: 50px;
     
 }
 .info-title{
     width: 100%;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    margin-left: 50px;
 }
 
 
