@@ -9,8 +9,8 @@
 
 
 html{
-    background-color: #f8f8f8;
-    color: #29292a;
+    background-color: #dbdada;
+    color: #2f3134;
     font-family: 'Montserrat', sans-serif;
     overflow: hidden;
     
@@ -54,6 +54,14 @@ h1{
 }
 h4{
     font-size: 2.5rem;
+}
+h4::before{
+    display: inline-block;
+    content: "";
+    border-top: .3rem solid #e40029;
+    width: 4rem;
+    margin: 0 1rem;
+    transform: translateY(-1rem);
 }
 
 .section1{
@@ -136,7 +144,7 @@ canvas .projects-canvas{
     width: 70%;
 }
 .border-bottom{
-    border-bottom: 2px solid #29292a ;
+    border-bottom: 2px solid #e40029 ;
 }
 .project-image{
     opacity: 0%;
